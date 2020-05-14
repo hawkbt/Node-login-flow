@@ -1,4 +1,5 @@
 import env from '../../env';
+import jwt from 'jsonwebtoken'
 
 /**
  * isValidEmail helper method
@@ -44,6 +45,18 @@ const empty = (input) => {
     return true;
   }
 };
+
+const generateUserToken = (email, id, is_admin, first_name, last_name) => {
+  const token = jwt.sign({
+    email, user_id: id,
+    is_admin,
+    first_name,
+    last_name
+  },
+  env.secret,
+  {expiresIn: '3d'})
+  return token
+}
 
 export {
   isValidEmail,
